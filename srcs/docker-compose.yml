@@ -1,0 +1,77 @@
+version: '3'
+services:
+  mariadb:
+    build: requirements/mariadb
+    container_name: mariadb
+    restart: always
+    ports:
+      - 3306
+    env_file:
+      - .env
+    environment:
+      - MYSQL_DATABASE=wordpress
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - project
+
+  wordpress:
+    build: requirements/wordpress
+    container_name: wordpress
+    ports:
+      - "9000"
+    volumes:
+      - wordpress:/var/www/wordpress
+    env_file:
+      - .env
+    environment:
+    - WORDPRESS_DB_HOST=db:3306
+    - WORDPRESS_DB_USER=$MYSQL_USER
+    - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+    - WORDPRESS_DB_NAME=wordpress
+    networks:
+      - project
+    depends_on:
+      - mariadb
+
+  nginx:
+    build: requirements/nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+      - "80:80"
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/www/wordpress
+    depends_on:
+      - wordpress
+    networks:
+      - project
+    restart: always
+
+volumes:
+  db:
+    name: db
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: home/zyasuo/data/db
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/zyasuo/data/wordpress
+
+# Создаваемая пользователем мостовая система project позволяет организовать коммуникацию между нашими контейнерами,
+# поскольку они находятся на одном хосте демона Docker.
+# Это позволяет организовать трафик и коммуникации внутри приложения, 
+# поскольку она открывает все порты между контейнерами в одной мостовой сети, скрывая все порты от внешнего мира. 
+# Таким образом, наши контейнеры mariadb, wordpress и nginx могут взаимодействовать друг с другом, 
+# и нам нужно будет только открыть порт 440 для внешнего доступа к приложению
+networks:
+  project:
+    driver: bridge
