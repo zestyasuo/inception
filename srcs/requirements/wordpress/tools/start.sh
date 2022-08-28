@@ -9,7 +9,6 @@
 # 	# ls -la var/www/html/wordpress
 # fi
 
-# sed -i "s/listen = \/run\/php\/php7.3-fpm.sock/listen = wordpress:9000/" "/etc/php8/php-fpm.d/www.conf";
 # mkdir -p /var/www/html/wordpress/mysite
 # mv /var/www/index.html /var/www/html/wordpress/mysite/index.html
 wp core download --allow-root
@@ -18,7 +17,6 @@ wp core install --allow-root --url=${DOMAIN_NAME} --title=${WORDPRESS_NAME} --ad
 							--admin_password=${MYSQL_ROOT_PASSWORD} --admin_email=${WORDPRESS_ROOT_EMAIL};
 
 wp user create ${MYSQL_USER} ${WORDPRESS_USER_EMAIL} --user_pass=${MYSQL_PASSWORD} --role=author --allow-root;
-mv /var/www/404.html /var/www/wordpress/404.html
 
 wp theme install neve --activate --allow-root
 /usr/sbin/php-fpm8 -F

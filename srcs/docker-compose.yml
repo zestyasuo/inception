@@ -49,6 +49,21 @@ services:
     networks:
       - project
     restart: always
+  ftp:
+    build: requirements/bonus/vsftpd
+    container_name: ftp
+    ports:
+      - "21:21"
+      - "20:20"
+      - "990:990"
+      - "21100-21110:21100-21110"
+    volumes:
+      - wordpress:/var/www/ftp
+    networks:
+      - project
+    depends_on:
+      - wordpress
+    restart: always
 
 volumes:
   db:
@@ -66,12 +81,6 @@ volumes:
       o: bind
       device: /home/zyasuo/data/wordpress
 
-# Создаваемая пользователем мостовая система project позволяет организовать коммуникацию между нашими контейнерами,
-# поскольку они находятся на одном хосте демона Docker.
-# Это позволяет организовать трафик и коммуникации внутри приложения, 
-# поскольку она открывает все порты между контейнерами в одной мостовой сети, скрывая все порты от внешнего мира. 
-# Таким образом, наши контейнеры mariadb, wordpress и nginx могут взаимодействовать друг с другом, 
-# и нам нужно будет только открыть порт 440 для внешнего доступа к приложению
 networks:
   project:
     driver: bridge

@@ -11,7 +11,7 @@ WP_DIR:
 	mkdir -p ${WP_DIR_PATH}
 
 up: | DB_DIR WP_DIR
-		docker-compose -f srcs/docker-compose.yml up -d
+		docker-compose -f srcs/docker-compose.yml up #-d
 
 down:
 		docker-compose -f srcs/docker-compose.yml down
