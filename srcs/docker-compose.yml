@@ -21,7 +21,7 @@ services:
     ports:
       - "9000"
     volumes:
-      - wordpress:/var/www/wordpress
+      - wordpress:/var/www/html/wordpress
     env_file:
       - .env
     environment:
@@ -43,7 +43,7 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress:/var/www/wordpress
+      - website:/var/www/html
     depends_on:
       - wordpress
     networks:
@@ -79,7 +79,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/zyasuo/data/wordpress
+      device: /home/zyasuo/data/website/wordpress
+  website:
+    name: website
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/zyasuo/data/website
 
 networks:
   project:

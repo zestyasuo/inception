@@ -9,5 +9,5 @@ if [ ! -f /etc/ssl/certs/nginx.crt ]; then
 		-subj "/C=RU/ST=Moscow/L=Moscow/O=21school/OU=zyasuo/CN=zyasuo.42.fr/"
 	echo "nginx: key set up"
 fi
-
+mkdir -p /var/www/html
 nginx -g 'daemon off;';

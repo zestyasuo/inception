@@ -1,6 +1,7 @@
 
 DB_DIR_PATH = /home/zyasuo/data/db
-WP_DIR_PATH = /home/zyasuo/data/wordpress
+WP_DIR_PATH = /home/zyasuo/data/website/wordpress
+WEBSITE_DIR_PATH = /home/${USER}/data/website
 
 all:	up
 
@@ -10,7 +11,10 @@ DB_DIR:
 WP_DIR:
 	mkdir -p ${WP_DIR_PATH}
 
-up: | DB_DIR WP_DIR
+WEBSITE_DIR :
+	mkdir -p ${WEBSITE_DIR_PATH}
+
+up: | WEBSITE_DIR DB_DIR WP_DIR
 		docker-compose -f srcs/docker-compose.yml up #-d
 
 down:
