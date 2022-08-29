@@ -41,6 +41,9 @@ define('WP_DEBUG', false);
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/' );
 }
+	
+define( 'WP_SITEURL', '/wordpress' );
+define( 'WP_CONTENT_URL', 'https://zyasuo.42.fr/wordpress/wp-content');
 
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
