@@ -25,10 +25,10 @@ services:
     env_file:
       - .env
     environment:
-    - WORDPRESS_DB_HOST=db:3306
-    - WORDPRESS_DB_USER=$MYSQL_USER
-    - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
-    - WORDPRESS_DB_NAME=wordpress
+      - WORDPRESS_DB_HOST=db:3306
+      - WORDPRESS_DB_USER=$MYSQL_USER
+      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+      - WORDPRESS_DB_NAME=wordpress
     networks:
       - project
     depends_on:
@@ -49,6 +49,7 @@ services:
     networks:
       - project
     restart: always
+
   ftp:
     build: requirements/bonus/vsftpd
     container_name: ftp
@@ -64,6 +65,19 @@ services:
     depends_on:
       - wordpress
     restart: always
+
+  adminer:
+    build: requirements/bonus/adminer
+    container_name: adminer
+    ports:
+      - "9000:9000"
+    networks:
+    - project
+    depends_on:
+    - mariadb
+    restart: always
+    volumes:
+    - adminer:/var/www/html/adminer
 
 volumes:
   db:
@@ -87,6 +101,13 @@ volumes:
       type: none
       o: bind
       device: /home/zyasuo/data/website
+  adminer:
+    name: adminer
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/zyasuo/data/website/adminer
 
 networks:
   project:

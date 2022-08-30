@@ -2,6 +2,7 @@
 DB_DIR_PATH = /home/zyasuo/data/db
 WP_DIR_PATH = /home/zyasuo/data/website/wordpress
 WEBSITE_DIR_PATH = /home/${USER}/data/website
+ADMINER_DIR_PATH = /home/${USER}/data/website/adminer
 
 all:	up
 
@@ -14,7 +15,10 @@ WP_DIR:
 WEBSITE_DIR :
 	mkdir -p ${WEBSITE_DIR_PATH}
 
-up: | WEBSITE_DIR DB_DIR WP_DIR
+ADMINER_DIR:
+	mkdir -p ${ADMINER_DIR_PATH}
+
+up: | WEBSITE_DIR DB_DIR WP_DIR ADMINER_DIR
 		docker-compose -f srcs/docker-compose.yml up #-d
 
 down:
