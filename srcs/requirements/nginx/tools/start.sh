@@ -7,7 +7,7 @@ if [ ! -f /etc/ssl/certs/nginx.crt ]; then
 		-keyout /etc/ssl/private/nginx.key \
 		-out /etc/ssl/certs/nginx.crt \
 		-subj "/C=RU/ST=Moscow/L=Moscow/O=21school/OU=zyasuo/CN=zyasuo.42.fr/"
+	mkdir -p /var/www/html
 	echo "nginx: key set up"
 fi
-mkdir -p /var/www/html
 nginx -g 'daemon off;';

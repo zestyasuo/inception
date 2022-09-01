@@ -19,13 +19,13 @@ ADMINER_DIR:
 	mkdir -p ${ADMINER_DIR_PATH}
 
 up: | WEBSITE_DIR DB_DIR WP_DIR ADMINER_DIR
-		docker-compose -f srcs/docker-compose.yml up #-d
+		docker compose -f srcs/docker-compose.yml up #-d
 
 down:
-		docker-compose -f srcs/docker-compose.yml down
+		docker compose -f srcs/docker-compose.yml down
 
 ps:
-		docker-compose -f srcs/docker-compose.yml ps
+		docker compose -f srcs/docker-compose.yml ps
 
 
 fclean:	down
@@ -34,5 +34,7 @@ fclean:	down
 		docker system prune -a --force
 		sudo rm -Rf ${DB_DIR_PATH}
 		sudo rm -Rf ${WP_DIR_PATH}
+		sudo rm -Rf ${WEBSITE_DIR_PATH}
+		sudo rm -Rf ${ADMINER_DIR_PATH}
 
 re: fclean all

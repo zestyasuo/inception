@@ -3,7 +3,8 @@ FROM alpine:3.16
 RUN apk update \
 	&& apk upgrade \
 	&& apk add --no-cache \
-	php php-fpm php-mysqli curl php-phar php-iconv
+	php php-fpm php-mysqli curl php-phar php-iconv \
+	redis mariadb-client
 
 RUN addgroup -S nginx && adduser -S nginx -G nginx
 EXPOSE 9000

@@ -79,6 +79,17 @@ services:
     restart: always
     volumes:
     - adminer:/var/www/html/adminer
+   
+  redis:
+    build: requirements/bonus/redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - project
+    depends_on:
+      - wordpress
+    restart: always
 
 volumes:
   db:
