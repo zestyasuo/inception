@@ -101,6 +101,19 @@ services:
     restart: always
     volumes:
       - static:/var/www/html/pelican
+  bot:
+    build: requirements/bonus/bot
+    container_name: bot
+    env_file:
+      - .env
+    ports:
+      - "8443"
+    networks:
+      - project
+    depends_on:
+      - nginx
+    restart: always
+
 
 volumes:
   db:
