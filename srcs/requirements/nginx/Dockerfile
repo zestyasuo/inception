@@ -8,5 +8,6 @@ COPY ./tools/start.sh /var/www/start.sh
 COPY ./conf/nginx.conf /etc/nginx/http.d/default.conf
 # COPY ./conf/index.html /var/www/index.html
 
+EXPOSE 22
 EXPOSE 443
 CMD [ "sh", "/var/www/start.sh" ]

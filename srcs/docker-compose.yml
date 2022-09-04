@@ -40,7 +40,6 @@ services:
     container_name: nginx
     ports:
       - "443:443"
-      - "80:80"
     env_file:
       - .env
     volumes:
@@ -90,6 +89,18 @@ services:
     depends_on:
       - wordpress
     restart: always
+  static:
+    build: requirements/bonus/static
+    container_name: static
+    ports: 
+      - "8000:8000"
+    networks: 
+      - project
+    depends_on: 
+      - nginx
+    restart: always
+    volumes:
+      - static:/var/www/html/pelican
 
 volumes:
   db:
@@ -120,6 +131,14 @@ volumes:
       type: none
       o: bind
       device: /home/zyasuo/data/website/adminer
+  static:
+    name: static
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/zyasuo/data/website/static
+   
 
 networks:
   project:
